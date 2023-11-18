@@ -4,20 +4,6 @@ namespace Game.Inventory
 {
     public class InventoryMenu : MonoBehaviour
     {
-        [Space]
-        [SerializeField] private InventorySlot _draggableSlot;
-
-        [Header("Equipment area")]
-        [SerializeField] private InventorySlot _equipAreaHead;
-
-        [Header("Equipment area/Hand")]
-        [SerializeField] private InventorySlot _equipAreaLeftHand;
-        [SerializeField] private InventorySlot _equipAreaRightHand;
-
-        [Header("Equipment area/Foot")]
-        [SerializeField] private InventorySlot _equipAreaLeftFoot;
-        [SerializeField] private InventorySlot _equipAreaRightFoot;
-
         [Header("Inventory area")]
         [SerializeField] private Transform _slotContainer;
 
@@ -32,8 +18,6 @@ namespace Game.Inventory
 
             for (var i = 0; i < _slots.Length; i++)
             {
-                _slots[i].SetIndex(i);
-
                 int capturedIndex = i;
                 _slots[i].OnItemTaken += equip => Internal_OnItemTaken(capturedIndex, equip);
                 _slots[i].OnItemDropped += equip => Internal_OnItemDropped(capturedIndex, equip);

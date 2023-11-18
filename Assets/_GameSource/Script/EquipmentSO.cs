@@ -13,5 +13,6 @@ namespace Game
         public Sprite EquipmentSprite;
         public int Price;
         public string Description;
+        public EquipmentCategory Category;
     }
 }

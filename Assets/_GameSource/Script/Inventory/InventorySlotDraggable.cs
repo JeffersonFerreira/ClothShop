@@ -1,14 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 namespace Game.Inventory
 {
-    public class InventorySlotDraggable : MonoBehaviour
+    public class InventorySlotDraggable : InventorySlot
     {
-        [SerializeField] private Image _icon;
-
         public static InventorySlotDraggable Instance { get; private set; }
-        public EquipmentSO Equip { get; private set; }
 
         private void Awake()
         {
@@ -21,21 +17,15 @@ namespace Game.Inventory
             transform.position = Input.mousePosition;
         }
 
-        public void Draw(EquipmentSO equip)
+        public override void Draw(EquipmentSO equip)
         {
+            base.Draw(equip);
             gameObject.SetActive(true);
-
-            if (equip)
-            {
-                Equip = equip;
-                _icon.overrideSprite = equip.EquipmentSprite;
-            }
         }
 
-        public void Clear()
+        public override void Clear()
         {
-            Equip = null;
-            _icon.overrideSprite = null;
+            base.Clear();
             gameObject.SetActive(false);
         }
     }

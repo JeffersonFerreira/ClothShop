@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3334206587044224810}
   - component: {fileID: 8907064989303804738}
   - component: {fileID: 242257666601010142}
-  - component: {fileID: 2151275236791710136}
+  - component: {fileID: 5037299507668214472}
   m_Layer: 5
   m_Name: Inventory_Item_Widget
   m_TagString: Untagged
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2151275236791710136
+--- !u!114 &5037299507668214472
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,10 +87,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5999500639357464755}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9c5f6af1e4a4f84a36d1f4c5e70f64b, type: 3}
+  m_Script: {fileID: 11500000, guid: 12d09c44a9ae4c3fba39132e44e98e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _icon: {fileID: 1926357543941455020}
+  _categoryFilter: {fileID: 0}
 --- !u!1 &8513249775052444176
 GameObject:
   m_ObjectHideFlags: 0
