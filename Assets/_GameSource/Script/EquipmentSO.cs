@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game
 {
@@ -8,7 +9,8 @@ namespace Game
         public string Id;
 
         [Space]
-        public Sprite Icon;
+        [FormerlySerializedAs("Icon")]
+        public Sprite EquipmentSprite;
         public int Price;
         public string Description;
     }
