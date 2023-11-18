@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 1173503319435976568}
   - component: {fileID: 1173503319435976569}
   - component: {fileID: 1173503319435976551}
+  - component: {fileID: 1584639823}
+  - component: {fileID: 6215749554013012145}
+  - component: {fileID: 9103238279285057156}
   m_Layer: 0
   m_Name: MainPlayer
   m_TagString: Untagged
@@ -71,6 +74,44 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1584639823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173503319435976570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1512bd8052b2487b8d31074f378f8aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 5
+--- !u!114 &6215749554013012145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173503319435976570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad3345234e44eb08483582c8f1eed69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9103238279285057156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173503319435976570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7d4a007dc8744218d484f4e5b8deae2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameDatabase: {fileID: 11400000, guid: e13357d95754b254985265d181c68c8c, type: 2}
 --- !u!1001 &1173503320084398498
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -142,6 +183,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 212000013352628812, guid: 722924ec8a0056f4a8fb443b2fb65ff9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 20eb058aea3c3a744bb5d47a1610550a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 722924ec8a0056f4a8fb443b2fb65ff9, type: 3}
 --- !u!4 &1172953445612819352 stripped
