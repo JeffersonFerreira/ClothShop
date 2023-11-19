@@ -20,7 +20,7 @@ namespace Game.Inventory
 
         public void Redraw()
         {
-            var equip = _inventory[Index];
+            EquipmentSO equip = _inventory[Index];
             _icon.overrideSprite = equip == null ? null : equip.EquipmentSprite;
         }
 

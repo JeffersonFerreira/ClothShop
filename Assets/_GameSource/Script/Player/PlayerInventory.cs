@@ -12,12 +12,13 @@ namespace Game
         [field: SerializeField]
         public int Money { get; private set; } = 250;
 
+        // Outsiders should be allowed to read but can't modify directly
         [CanBeNull]
         public EquipmentSO this[int index] => index < 0 || index > _slots.Length ? null : _slots[index];
 
+        public event Action<int> OnMoneyChanged;
         public event Action<int, EquipmentSO> OnInserted;
         public event Action<int, EquipmentSO> OnRemoved;
-        public event Action<int> OnMoneyChanged;
 
         private readonly EquipmentSO[] _slots = new EquipmentSO[TOTAL_SLOTS];
 

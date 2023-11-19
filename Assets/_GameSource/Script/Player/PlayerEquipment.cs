@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -10,32 +9,34 @@ namespace Game
     {
         [SerializeField] private CategoryToRender[] _categoryToRendersList;
 
+        public event Action<EquipmentSO> OnEquip;
+        public event Action<EquipmentSO> OnDequip;
+
+        // Outsiders should be allowed to read which equipment I'm wearing, but can't modify directly
         [CanBeNull]
-        public EquipmentSO this[EquipmentCategory category] => _equipmentMap.GetValueOrDefault(category);
+        public EquipmentSO this[EquipmentCategory category] => _activeEquipmentMap.GetValueOrDefault(category);
 
-        public event Action<EquipmentSO> OnEquip, OnDequip;
-
-        private Dictionary<EquipmentCategory, CategoryToRender> _catRenderMap;
-        private Dictionary<EquipmentCategory, DefaultRenderData> _defaultRenderDataMap;
-        private readonly Dictionary<EquipmentCategory, EquipmentSO> _equipmentMap = new();
+        private readonly Dictionary<EquipmentCategory, EquipmentSO> _activeEquipmentMap = new();
+        private readonly Dictionary<EquipmentCategory, CategoryToRender> _categoryRenderMap = new();
+        private readonly Dictionary<EquipmentCategory, DefaultRenderData> _defaultRenderMap = new();
 
         private void Awake()
         {
-            _catRenderMap = _categoryToRendersList.ToDictionary(map => map.Category);
-
-            _defaultRenderDataMap = _categoryToRendersList.ToDictionary(
-                map => map.Category,
-                map => DefaultRenderData.From(map)
-            );
+            foreach (var renderMap in _categoryToRendersList)
+            {
+                _categoryRenderMap.Add(renderMap.Category, renderMap);
+                _defaultRenderMap.Add(renderMap.Category, DefaultRenderData.From(renderMap));
+            }
         }
 
         public bool TryEquip(EquipmentSO equipment)
         {
-            if (!_equipmentMap.TryAdd(equipment.Category, equipment))
+            // Item of equal type is already equipped?
+            if (!_activeEquipmentMap.TryAdd(equipment.Category, equipment))
                 return false;
 
-            if (!_catRenderMap.TryGetValue(equipment.Category, out var renderMap))
-                return false;
+            // Apply equipment sprites to their renderers
+            CategoryToRender renderMap = _categoryRenderMap[equipment.Category];
 
             if (renderMap.Renderer != null && equipment.EquipmentSprite != null)
                 renderMap.Renderer.sprite = equipment.EquipmentSprite;
@@ -49,23 +50,21 @@ namespace Game
 
         public bool TryDequip(EquipmentCategory category, out EquipmentSO equipment)
         {
-            if (!_equipmentMap.TryGetValue(category, out equipment))
+            // I'm wearing this equipment?
+            if (!_activeEquipmentMap.Remove(category, out equipment))
                 return false;
 
-            if (!_catRenderMap.TryGetValue(category, out CategoryToRender catRenderers))
-                return false;
+            // Restore the original sprites for this equipment type
+            CategoryToRender renderMap = _categoryRenderMap[category];
+            DefaultRenderData defaultRenderData = _defaultRenderMap[category];
 
-            DefaultRenderData defaultRenderData = _defaultRenderDataMap[category];
+            if (renderMap.Renderer != null && defaultRenderData.PrimarySprite != null)
+                renderMap.Renderer.sprite = defaultRenderData.PrimarySprite;
 
-            if (catRenderers.Renderer != null && defaultRenderData.PrimarySprite != null)
-                catRenderers.Renderer.sprite = defaultRenderData.PrimarySprite;
+            if (renderMap.RendererSecondary != null && defaultRenderData.SecondarySprite != null)
+                renderMap.RendererSecondary.sprite = defaultRenderData.SecondarySprite;
 
-            if (catRenderers.RendererSecondary != null && defaultRenderData.SecondarySprite != null)
-                catRenderers.RendererSecondary.sprite = defaultRenderData.SecondarySprite;
-
-            _equipmentMap.Remove(category);
             OnDequip?.Invoke(equipment);
-
             return true;
         }
 

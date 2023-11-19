@@ -21,18 +21,22 @@ namespace Game.Inventory
 
         private void Awake()
         {
+            // External refs
             _playerInventory = FindObjectOfType<PlayerInventory>();
             _playerEquipment = FindObjectOfType<PlayerEquipment>();
 
+            // Internal refs
             _slots = _inventoryContainer.GetComponentsInChildren<InventorySlot>();
             _equipmentSlots = _equipmentContainer.GetComponentsInChildren<InventorySlotEquipment>().ToDictionary(map => map.Category);
 
+            // Bind events
             _playerInventory.OnRemoved += (i, equip) => _slots[i].Redraw();
             _playerInventory.OnInserted += (i, equip) => _slots[i].Redraw();
 
             _playerEquipment.OnEquip += equip => _equipmentSlots[equip.Category].Redraw();
             _playerEquipment.OnDequip += equip => _equipmentSlots[equip.Category].Redraw();
 
+            // Setup slots
             for (int i = 0; i < _slots.Length; i++)
                 _slots[i].SetIndex(i, _playerInventory);
         }
@@ -46,6 +50,7 @@ namespace Game.Inventory
         {
             gameObject.SetActive(false);
 
+            // If something is being dragged, put it back to the inventory
             var draggable = InventorySlotDraggable.Instance;
 
             if (draggable.Equip)
@@ -53,14 +58,6 @@ namespace Game.Inventory
                 _playerInventory.TryAppend(draggable.Equip);
                 draggable.Hide();
             }
-        }
-
-        public void ToggleOpen()
-        {
-            if (IsOpen)
-                Close();
-            else
-                Open();
         }
     }
 }

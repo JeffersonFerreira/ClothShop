@@ -34,16 +34,14 @@ namespace Game
 
         public void Purchase(EquipmentSO equip)
         {
-            if (_playerInventory.Money >= equip.Price && _playerInventory.HasSpace())
-            {
-                if (_playerInventory.TrySpend(equip.Price))
-                {
-                    _playerInventory.TryAppend(equip);
+            // Don't let player buy without sufficient inventory space or money
+            if (!_playerInventory.HasSpace() || !_playerInventory.TrySpend(equip.Price))
+                return;
 
-                    Destroy(_displayedItems[equip].gameObject);
-                    _displayedItems.Remove(equip);
-                }
-            }
+            Destroy(_displayedItems[equip].gameObject);
+
+            _playerInventory.TryAppend(equip);
+            _displayedItems.Remove(equip);
         }
 
         public void Show() => gameObject.SetActive(true);
