@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Game
@@ -7,6 +8,7 @@ namespace Game
     {
         private const int TOTAL_SLOTS = 6 * 3;
 
+        [CanBeNull]
         public EquipmentSO this[int index] => index < 0 || index > _slots.Length ? null : _slots[index];
 
         public event Action<int, EquipmentSO> OnInserted, OnRemoved;

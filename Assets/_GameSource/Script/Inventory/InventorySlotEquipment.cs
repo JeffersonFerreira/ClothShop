@@ -4,24 +4,25 @@ using UnityEngine.UI;
 
 namespace Game.Inventory
 {
-    public class InventorySlot : MonoBehaviour, IPointerClickHandler
+    public class InventorySlotEquipment : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField] protected Image _icon;
+        [SerializeField] private Image _image;
+        [SerializeField] private EquipmentCategory _category;
 
-        public int Index { get; private set; }
-        private PlayerInventory _inventory;
+        public EquipmentCategory Category => _category;
 
-        public void SetIndex(int index, PlayerInventory inventory)
+        private PlayerEquipment _equipment;
+
+        private void Awake()
         {
-            _inventory = inventory;
-            Index = index;
-            Redraw();
+            _equipment = FindObjectOfType<PlayerEquipment>();
         }
 
         public void Redraw()
         {
-            var equip = _inventory[Index];
-            _icon.overrideSprite = equip == null ? null : equip.EquipmentSprite;
+            EquipmentSO equip = _equipment[_category];
+
+            _image.overrideSprite = equip == null ? null : equip.EquipmentSprite;
         }
 
         void IPointerClickHandler.OnPointerClick(PointerEventData _)
@@ -31,7 +32,7 @@ namespace Game.Inventory
             if (!draggable.gameObject.activeSelf)
             {
                 // If drag isn't active and we have an item, lets begin dragging
-                if (_inventory.TryRemove(Index, out EquipmentSO equip))
+                if (_equipment.TryDequip(_category, out EquipmentSO equip))
                     draggable.Show(equip);
             }
 
@@ -39,14 +40,14 @@ namespace Game.Inventory
             else
             {
                 // This slot is holding equipment, lets swap
-                if (_inventory.TryRemove(Index, out EquipmentSO inventoryEquip))
+                if (_equipment.TryDequip(_category, out EquipmentSO equip))
                 {
-                    _inventory.TryInsert(Index, draggable.Equip);
-                    draggable.Show(inventoryEquip);
+                    _equipment.TryEquip(draggable.Equip);
+                    draggable.Show(equip);
                 }
 
                 // This slot is free, let's get the one from drag
-                else if (_inventory.TryInsert(Index, draggable.Equip))
+                else if (_equipment.TryEquip(draggable.Equip))
                 {
                     draggable.Hide();
                 }

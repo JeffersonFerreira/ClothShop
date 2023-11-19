@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Game
@@ -8,6 +9,9 @@ namespace Game
     public class PlayerEquipment : MonoBehaviour
     {
         [SerializeField] private CategoryToRender[] _categoryToRendersList;
+
+        [CanBeNull]
+        public EquipmentSO this[EquipmentCategory category] => _equipmentMap.GetValueOrDefault(category);
 
         public event Action<EquipmentSO> OnEquip, OnDequip;
 
@@ -37,7 +41,7 @@ namespace Game
 
             if (success)
             {
-                _equipmentMap[category] = null;
+                _equipmentMap.Remove(category);
                 OnDequip?.Invoke(equipment);
             }
 
