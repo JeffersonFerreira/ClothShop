@@ -58,10 +58,10 @@ namespace Game
             CategoryToRender renderMap = _categoryRenderMap[category];
             DefaultRenderData defaultRenderData = _defaultRenderMap[category];
 
-            if (renderMap.Renderer != null && defaultRenderData.PrimarySprite != null)
+            if (renderMap.Renderer != null)
                 renderMap.Renderer.sprite = defaultRenderData.PrimarySprite;
 
-            if (renderMap.RendererSecondary != null && defaultRenderData.SecondarySprite != null)
+            if (renderMap.RendererSecondary != null)
                 renderMap.RendererSecondary.sprite = defaultRenderData.SecondarySprite;
 
             OnDequip?.Invoke(equipment);
