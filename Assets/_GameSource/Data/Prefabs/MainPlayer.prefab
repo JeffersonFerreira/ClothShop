@@ -125,7 +125,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1935cd6aca4b1ebab7f79953076fda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _categoryToRendersList: []
+  _categoryToRendersList:
+  - Category: {fileID: 11400000, guid: 8b1f571dbe5b27a47a00e264b5b00579, type: 2}
+    Renderer: {fileID: 1348885189050086382}
+    RendererSecondary: {fileID: 0}
+  - Category: {fileID: 11400000, guid: 3c7d8da5bd5b7d64ab2d068c8c90e881, type: 2}
+    Renderer: {fileID: 1348885187727287476}
+    RendererSecondary: {fileID: 0}
+  - Category: {fileID: 11400000, guid: e220afc0819eed04782f1442ac23d238, type: 2}
+    Renderer: {fileID: 1348885192369286490}
+    RendererSecondary: {fileID: 0}
 --- !u!1001 &1173503320084398498
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -200,7 +209,11 @@ PrefabInstance:
     - target: {fileID: 212000013352628812, guid: 722924ec8a0056f4a8fb443b2fb65ff9, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 20eb058aea3c3a744bb5d47a1610550a, type: 3}
+      objectReference: {fileID: 0}
+    - target: {fileID: 212000013352628812, guid: 722924ec8a0056f4a8fb443b2fb65ff9, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 722924ec8a0056f4a8fb443b2fb65ff9, type: 3}
 --- !u!4 &1172953445612819352 stripped
@@ -224,3 +237,18 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
+--- !u!212 &1348885187727287476 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 212000011487683862, guid: 722924ec8a0056f4a8fb443b2fb65ff9, type: 3}
+  m_PrefabInstance: {fileID: 1173503320084398498}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1348885189050086382 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 212000013352628812, guid: 722924ec8a0056f4a8fb443b2fb65ff9, type: 3}
+  m_PrefabInstance: {fileID: 1173503320084398498}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1348885192369286490 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 212000010222169336, guid: 722924ec8a0056f4a8fb443b2fb65ff9, type: 3}
+  m_PrefabInstance: {fileID: 1173503320084398498}
+  m_PrefabAsset: {fileID: 0}

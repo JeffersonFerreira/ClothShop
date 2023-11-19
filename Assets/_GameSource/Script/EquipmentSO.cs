@@ -11,6 +11,9 @@ namespace Game
         [Space]
         [FormerlySerializedAs("Icon")]
         public Sprite EquipmentSprite;
+        public Sprite EquipmentSpriteSecondary;
+
+        [Space]
         public int Price;
         public string Description;
         public EquipmentCategory Category;
