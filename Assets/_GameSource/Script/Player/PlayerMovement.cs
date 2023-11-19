@@ -9,14 +9,14 @@ namespace Game
 
         private static readonly int animIsWalking = Animator.StringToHash("isWalking");
 
-        private Vector3 _movementDir;
+        public Vector3 MovementDir { get; private set; }
 
         public void Move(float h, float v)
         {
-            _movementDir = new Vector3(h, v, 0).normalized;
+            MovementDir = new Vector3(h, v, 0).normalized;
 
             // Toggle walking animation if moving
-            bool isMoving = _movementDir.sqrMagnitude > 0.01f;
+            bool isMoving = MovementDir.sqrMagnitude > 0.01f;
             _animator.SetBool(animIsWalking, isMoving);
 
             // Flip character scale to make it face the same direction as the input
@@ -30,7 +30,7 @@ namespace Game
 
         private void FixedUpdate()
         {
-            transform.position += _movementDir * _moveSpeed * Time.deltaTime;
+            transform.position += MovementDir * _moveSpeed * Time.deltaTime;
         }
     }
 }
