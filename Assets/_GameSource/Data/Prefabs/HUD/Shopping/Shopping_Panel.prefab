@@ -198,7 +198,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2400837199522651654}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.44749844
+  m_Size: 0.4474984
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -874,6 +874,7 @@ GameObject:
   - component: {fileID: 7505466939579489994}
   - component: {fileID: 7505466939579489992}
   - component: {fileID: 7505466939579489995}
+  - component: {fileID: 4675277813277517985}
   m_Layer: 5
   m_Name: Balance_Widget
   m_TagString: Untagged
@@ -941,6 +942,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4675277813277517985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7505466939579489989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a8e0ab03b0f4022b3448d45caa9a098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _balanceText: {fileID: 7505466938322490141}
 --- !u!1 &7505466939647383702
 GameObject:
   m_ObjectHideFlags: 0

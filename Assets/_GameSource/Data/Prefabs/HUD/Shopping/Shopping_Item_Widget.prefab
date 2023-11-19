@@ -506,6 +506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38df8c5bd6f5441396dba25f9e26c6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _button: {fileID: 1408344559684525832}
   _icon: {fileID: 1460608172623138860}
   _descriptionText: {fileID: 1460608171579099506}
   _priceText: {fileID: 1460608171390298778}
