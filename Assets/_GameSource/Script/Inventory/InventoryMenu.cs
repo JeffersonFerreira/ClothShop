@@ -16,31 +16,19 @@ namespace Game.Inventory
             _playerInventory = FindObjectOfType<PlayerInventory>();
             _slots = _slotContainer.GetComponentsInChildren<InventorySlot>();
 
-            for (var i = 0; i < _slots.Length; i++)
+            _playerInventory.OnRemoved += (i, equip) => _slots[i].Redraw();
+            _playerInventory.OnInserted += (i, equip) => _slots[i].Redraw();
+
+            for (int i = 0; i < _slots.Length; i++)
             {
-                int capturedIndex = i;
-                _slots[i].OnItemTaken += equip => Internal_OnItemTaken(capturedIndex, equip);
-                _slots[i].OnItemDropped += equip => Internal_OnItemDropped(capturedIndex, equip);
+                _slots[i].SetIndex(i);
+                _slots[i].Redraw();
             }
         }
-
-        private void Internal_OnItemDropped(int i, EquipmentSO equip) => _playerInventory.TryInsert(i, equip);
-        private void Internal_OnItemTaken(int i, EquipmentSO equip) => _playerInventory.TryRemove(i, out _);
 
         public void Open()
         {
             gameObject.SetActive(true);
-
-            // Player slots has the same count as Inventory Menu
-            int index = -1;
-            foreach (EquipmentSO equip in _playerInventory.Slots)
-            {
-                index++;
-                if (equip == null)
-                    _slots[index].Clear();
-                else
-                    _slots[index].Draw(equip);
-            }
         }
 
         public void Close()
@@ -52,8 +40,16 @@ namespace Game.Inventory
             if (draggable.Equip)
             {
                 _playerInventory.TryAppend(draggable.Equip);
-                draggable.Clear();
+                draggable.Hide();
             }
+        }
+
+        public void ToggleOpen()
+        {
+            if (IsOpen)
+                Close();
+            else
+                Open();
         }
     }
 }

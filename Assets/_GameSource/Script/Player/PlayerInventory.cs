@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Game.Inventory;
+﻿using System;
 using UnityEngine;
 
 namespace Game
@@ -8,39 +7,18 @@ namespace Game
     {
         private const int TOTAL_SLOTS = 6 * 3;
 
-        public IReadOnlyCollection<EquipmentSO> Slots => _slots;
+        public EquipmentSO this[int index] => index < 0 || index > _slots.Length ? null : _slots[index];
 
-        public bool IsOpen => _inventoryMenu.IsOpen;
+        public event Action<int, EquipmentSO> OnInserted, OnRemoved;
 
-        // Hashset to avoid duplicates
-        private EquipmentSO[] _slots;
-
-        private InventoryMenu _inventoryMenu;
-
-        private void Awake()
-        {
-            _slots = new EquipmentSO[TOTAL_SLOTS];
-            _inventoryMenu = FindObjectOfType<InventoryMenu>(true);
-        }
-
-        public void ToggleOpen()
-        {
-            if (_inventoryMenu.IsOpen)
-                _inventoryMenu.Close();
-            else
-                _inventoryMenu.Open();
-        }
+        private readonly EquipmentSO[] _slots = new EquipmentSO[TOTAL_SLOTS];
 
         public bool TryAppend(EquipmentSO equip)
         {
-            // Try to add element at the first empty slot
             for (var i = 0; i < _slots.Length; i++)
             {
                 if (_slots[i] == null)
-                {
-                    _slots[i] = equip;
-                    return true;
-                }
+                    return TryInsert(i, equip);
             }
 
             return false;
@@ -53,12 +31,13 @@ namespace Game
 
             _slots[index] = equip;
 
+            OnInserted?.Invoke(index, equip);
             return true;
         }
 
         public bool TryRemove(int index, out EquipmentSO equip)
         {
-            if (index >= _slots.Length)
+            if (index >= _slots.Length || _slots[index] == null)
             {
                 equip = null;
                 return false;
@@ -66,7 +45,9 @@ namespace Game
 
             equip = _slots[index];
             _slots[index] = null;
-            return equip != null;
+
+            OnRemoved?.Invoke(index, equip);
+            return true;
         }
     }
 }

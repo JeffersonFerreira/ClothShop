@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -8,68 +7,52 @@ namespace Game.Inventory
     public class InventorySlot : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] protected Image _icon;
-        [SerializeField] private EquipmentCategory _categoryFilter;
 
-        public event Action<EquipmentSO> OnItemTaken, OnItemDropped;
+        public int Index { get; private set; }
+        private PlayerInventory _inventory;
 
-        public EquipmentSO Equip { get; protected set; }
-
-        public virtual bool CanDraw(EquipmentSO equip)
+        private void Awake()
         {
-            return _categoryFilter == null || equip.Category == _categoryFilter;
+            _inventory = FindObjectOfType<PlayerInventory>();
         }
 
-        public virtual void Draw(EquipmentSO equip)
+        public void SetIndex(int index)
         {
-            Equip = equip;
-
-            if (equip)
-                _icon.overrideSprite = equip.EquipmentSprite;
+            Index = index;
         }
 
-        public virtual void Clear()
+        public void Redraw()
         {
-            Equip = null;
-            _icon.overrideSprite = null;
+            var equip = _inventory[Index];
+            _icon.overrideSprite = equip == null ? null : equip.EquipmentSprite;
         }
 
         void IPointerClickHandler.OnPointerClick(PointerEventData _)
         {
             var draggable = InventorySlotDraggable.Instance;
 
-            // If draggable active, try get his object
-            if (draggable.gameObject.activeSelf)
+            if (!draggable.gameObject.activeSelf)
             {
-                if (!CanDraw(draggable.Equip))
-                    return;
-
-                // This slot isn't holding any equipment, let's get the one from drag
-                if (!Equip)
-                {
-                    Draw(draggable.Equip);
-                    OnItemDropped?.Invoke(draggable.Equip);
-
-                    draggable.Clear();
-                }
-                // This slot is holding equipment, lets swap
-                else
-                {
-                    var tempEquip = Equip;
-
-                    Draw(draggable.Equip);
-                    draggable.Draw(tempEquip);
-
-                    OnItemTaken?.Invoke(tempEquip);
-                    OnItemDropped?.Invoke(Equip);
-                }
+                // If drag isn't active and we have an item, lets begin dragging
+                if (_inventory.TryRemove(Index, out EquipmentSO equip))
+                    draggable.Show(equip);
             }
-            // If drag isn't active and we have an item, lets put it in the drag
-            else if (Equip)
-            {
-                draggable.Draw(Equip);
-                OnItemTaken?.Invoke(Equip);
 
-                Clear();
+            // If dragging something
+            else
+            {
+                // This slot is holding equipment, lets swap
+                if (_inventory.TryRemove(Index, out EquipmentSO inventoryEquip))
+                {
+                    _inventory.TryInsert(Index, draggable.Equip);
+                    draggable.Show(inventoryEquip);
+                }
+
+                // This slot is free, let's get the one from drag
+                else if (_inventory.TryInsert(Index, draggable.Equip))
+                {
+                    draggable.Hide();
+                }
             }
         }
     }

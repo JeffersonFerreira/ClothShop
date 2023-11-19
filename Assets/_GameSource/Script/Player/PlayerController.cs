@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Inventory;
+using UnityEngine;
 
 namespace Game
 {
@@ -7,28 +8,33 @@ namespace Game
         // TODO: Test only, remove later
         [SerializeField] private GameDatabase _gameDatabase;
 
-        public PlayerInventory Inventory { get; private set; }
+        private PlayerInventory _inventory;
         private PlayerMovement _movement;
+
+        private InventoryMenu _inventoryMenu;
+
 
         private void Awake()
         {
-            Inventory = GetComponent<PlayerInventory>();
+            _inventory = GetComponent<PlayerInventory>();
             _movement = GetComponent<PlayerMovement>();
+
+            _inventoryMenu = FindObjectOfType<InventoryMenu>(true);
         }
 
         private void Start()
         {
             // TODO: Test only, remove later
             foreach (var equipmentSo in _gameDatabase.Equipment)
-                Inventory.TryAppend(equipmentSo);
+                _inventory.TryAppend(equipmentSo);
         }
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.B))
-                Inventory.ToggleOpen();
+                _inventoryMenu.ToggleOpen();
 
-            if (!Inventory.IsOpen)
+            if (!_inventoryMenu.IsOpen)
             {
                 float h = Input.GetAxisRaw("Horizontal");
                 float v = Input.GetAxisRaw("Vertical");
