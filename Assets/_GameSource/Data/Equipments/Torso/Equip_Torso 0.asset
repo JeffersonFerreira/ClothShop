@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bff41f765bef445eb0f4427616c3b8a1, type: 3}
   m_Name: Equip_Torso 0
   m_EditorClassIdentifier: 
-  Id: 
   EquipmentSprite: {fileID: 21300000, guid: 215dd6c48c732d744aecd29e7fecbbfa, type: 3}
   EquipmentSpriteSecondary: {fileID: 0}
   Price: 0
-  Description: 
+  Description: A nice protective shirt
   Category: {fileID: 11400000, guid: e220afc0819eed04782f1442ac23d238, type: 2}
