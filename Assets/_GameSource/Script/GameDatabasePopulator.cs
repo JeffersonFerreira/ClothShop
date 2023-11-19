@@ -25,6 +25,7 @@ namespace Game
             EquipmentSO[] equipment = LoadAsset<EquipmentSO>().ToArray();
 
             gameDatabase.SetItems(equipment);
+            AssetDatabase.SaveAssets();
         }
 
         private static IEnumerable<T> LoadAsset<T>() where T : Object
